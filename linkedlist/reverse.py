@@ -7,11 +7,11 @@ def reverse_list(head):
   current = head
   prev = None
   while current is not None:
-    dummy = current
+    next = current.next
     current.next = prev
-    prev = dummy
-    current = dummy.next
-  return current
+    prev = current
+    current = next
+  return prev
 
 
 
