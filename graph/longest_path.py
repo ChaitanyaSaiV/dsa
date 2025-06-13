@@ -4,28 +4,32 @@ A path may start and end at any two nodes. The length of a path is considered th
 
 
 def longest_path(graph):
-  distance = {}
-  for node in graph:
-    if len(graph[node]) == 0:
-      distance[node] = 0
-      
-  for node in graph:
-    traverse_distance(graph, node, distance)
-    
-  return max(distance.values())
+  visited = {}
 
-def traverse_distance(graph, node, distance):
-  if node in distance:
-    return distance[node]
+
+  for node in graph:
+    explore_path(graph, node, visited)
+
+  return max(visited.values())
+
+
+def explore_path(graph, node, visited):
+  if len(graph[node]) == 0:
+    return 0
+  if node in visited:
+    return visited[node]
   
-  largest = 0
+  length = float("-inf")
+
   for neighbor in graph[node]:
-    attempt = traverse_distance(graph, neighbor, distance)
-    if attempt > largest:
-      largest = attempt
+    neighbor_path = explore_path(graph, neighbor, visited)
+    length = max(neighbor_path, length)
   
-  distance[node] = 1 + largest
-  return distance[node]
+  length += 1
+
+  visited[node] = length
+
+  return length
 
 
         
