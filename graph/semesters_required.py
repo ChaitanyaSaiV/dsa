@@ -6,19 +6,51 @@ Note that given prerequisite (A, B), you cannot take course A and course B concu
 You can assume that it is possible to eventually complete all courses. """
 
 def semesters_required(num_courses, prereqs):
-  graph = build_graph(prereqs)
-  return graph
+  graph, courses = build_graph(prereqs)
+
+  completed = set()
+
+  sems = 0
+
+  while courses:
+    for prereqs in list(graph):
+      for prereq in list(graph[prereqs]):
+        if prereq in completed:
+          graph[prereqs].remove(prereq)
+        
+        if len(graph[prereqs]) == 0:
+          del graph[prereqs]
+
+    current_sem = set()
+
+    for course in courses:
+      if course not in graph:
+        current_sem.add(course)
+    
+    for current_sem_course in current_sem:
+      courses.remove(current_sem_course)
+      completed.add(current_sem_course)
+
+    sems += 1
+  
+  return sems
 
 def build_graph(prereqs):
   graph = {}
+  courses = set()
   for prereq in prereqs:
     a, b = prereq
-    if a not in graph:
+    if b not in graph:
       graph[b] = []
+    if a not in courses:
+      courses.add(a)
+    if b not in courses:
+      courses.add(b)
 
-    graph[b] = a
+    graph[b].append(a)
 
-  return graph
+  return graph, courses
+
 
 num_courses = 6
 prereqs = [
