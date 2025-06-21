@@ -22,7 +22,7 @@ def counting_change(amount, coins):
   return _counting_change(amount, coins, memo)
 
 
-def _counting_change(amount, coins, memo):
+""" def _counting_change(amount, coins, memo):
 
   if amount in memo:
     return memo[amount]
@@ -43,7 +43,7 @@ def _counting_change(amount, coins, memo):
 
   memo[amount] = count
 
-  return memo[amount]
+  return memo[amount] """
 
 
 
