@@ -10,3 +10,5 @@ def quickest_concat(s, words):
 
 
 quickest_concat('caution', ['ca', 'ion', 'caut', 'ut']) # -> 2
+
+
