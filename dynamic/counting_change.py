@@ -19,7 +19,30 @@ There are four different ways to make an amount of 4:
 
 def counting_change(amount, coins):
   memo = {}
-  return _counting_change(amount, coins, memo)
+  return _counting_change(amount, coins, 0, {})
+
+
+def _counting_change(amount, coins, i, memo):
+  key = (amount, i)
+  if key in memo:
+    return memo[key]
+  if amount == 0:
+    return 1
+  
+  if i >= len(coins):
+    return 0
+  
+  coin = coins[i]
+
+  total = 0
+
+  for qty in range (0, (amount // coin ) + 1):
+    remainder = amount - (coin * qty)
+    total += _counting_change(remainder, coins, i + 1, memo)
+
+  memo[key] = total
+
+  return total
 
 
 """ def _counting_change(amount, coins, memo):
