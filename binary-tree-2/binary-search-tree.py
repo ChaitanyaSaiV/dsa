@@ -6,7 +6,6 @@ The function should return a boolean indicating whether or not the tree satisfie
 A Binary Search Tree is a binary tree where all values within a node's left subtree are smaller than the node's value and all values in a node's right subtree are greater than the node's value. """
 
 
-from collections import deque
 
 class Node:
   def __init__(self, val):
@@ -15,25 +14,28 @@ class Node:
     self.right = None
 
 def is_binary_search_tree(root):
-  queue = deque([root])
-  while queue:
-    length = len(queue)
-    for i in range(length):
-      current = queue.popleft()
+  stack = []
+  stack = _is_binary_search_tree(root, stack)
+  prev = float("-inf")
 
-      
-      if current.left is not None:
-        if current.val < current.left.val:
-          return False
-        else:
-          queue.append(current.left)
-      if current.left is not None:
-        if current.val > current.right.val:
-          return False
-        else:
-          queue.append(current.right)
-  
+  for val in stack:
+    if val < prev:
+      return False
+    prev = val
   return True
+
+
+def _is_binary_search_tree(root, stack):
+  if root is None:
+    return []
+  
+  _is_binary_search_tree(root.left, stack)
+
+  stack.append(root.val)
+
+  _is_binary_search_tree(root.right, stack)
+
+  return stack
 
 
 
