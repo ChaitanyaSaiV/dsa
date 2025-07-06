@@ -13,7 +13,23 @@ class Node:
     self.right = None
 
 def build_tree_in_post(in_order, post_order):
-  pass # todo
+  if len(post_order) == 0:
+    return None
+  
+  val = post_order[-1]
+  root = Node(val)
+  root_idx = in_order.index(val)
+
+  left_in_order = in_order[:root_idx]
+  right_in_order = in_order[root_idx + 1:]
+
+  left_post_order = post_order[:len(left_in_order)]
+  right_post_order = post_order[len(left_in_order):len(post_order)-1]
+
+  root.left = build_tree_in_post(left_in_order, left_post_order)
+  root.right = build_tree_in_post(right_in_order, right_post_order)
+
+  return root
 
 
 
