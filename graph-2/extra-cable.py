@@ -38,8 +38,43 @@ Write a function that takes in number num_computers and a list of cables that co
 
 The function should return a cable that can be safely removed. There will be multiple possible cables that can be chosen; you may return any of them. """
 
+def find(roots, node):
+  if roots[node] == node:
+    return node
+  found = find(roots, roots[node])
+  roots[node] = found
+  return found
+
+def union(roots, sizes, cable):
+  a, b = cable
+  root_a = find(roots, a)
+  root_b = find(roots, b)
+
+  if root_b == root_a:
+    return True
+
+  if sizes[root_a] >= sizes[root_b]:
+    roots[root_b] = root_a
+    sizes[root_a] += sizes[root_b]
+  else:
+    roots[root_a] = root_b
+    sizes[root_b] += sizes[root_a]
+
+  return False
+
 def extra_cable(num_computers, cables):
-  pass # todo
+  roots = []
+  sizes = []
+  for i in range(num_computers):
+    roots.append(i)
+    sizes.append(1)
+
+  for cable in cables:
+    not_needed_cable = union(roots, sizes, cable)
+    if not_needed_cable:
+      return cable
+
+  return
 
 extra_cable(5, [
   (3, 2),

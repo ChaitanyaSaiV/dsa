@@ -30,46 +30,48 @@ class MinHeap:
         current_index = parent_index
       else:
         break
+
+  def sift_down(self, index):
+    current_index = index
+    size = self.size()
+    print(current_index)
+    while current_index < size:
+      left_index = 2 * current_index + 1
+      right_index = 2 * current_index + 2
+      if left_index > size - 1:
+        left_val = float("inf")
+      else:
+        left_val = self.list[left_index]
+
+      if right_index > size - 1:
+        right_val = float("inf")
+      else:
+        right_val = self.list[right_index]
+      
+      if left_val < right_val:
+        swap_val = left_val
+        swap_index = left_index
+      else:
+        swap_val = right_val
+        swap_index = right_index
+
+      if self.list[current_index] > swap_val:
+        self.swap(swap_index, current_index)
+        current_index = swap_index
+      else:
+        break
+    return
+        
     
   def insert(self, val):
     self.list.append(val)
     self.sift_up(self.size() - 1)
       
-  def sift_down(self, index):
-    current_index = index
-    while current_index < self.size() - 1:
-      left_child_index = current_index * 2 + 1
-      right_child_index = current_index * 2 + 2
-      
-      left_child_val = float("inf") if left_child_index >= self.size() else self.list[left_child_index]
-      right_child_val = float("inf") if right_child_index >= self.size() else self.list[right_child_index]
-      
-      smaller_child_val = left_child_val if left_child_val < right_child_val else right_child_val
-      smaller_child_index = left_child_index if left_child_val < right_child_val else right_child_index
-      
-      if self.list[current_index] > smaller_child_val:
-        self.swap(current_index, smaller_child_index)
-        current_index = smaller_child_index
-      else:
-        break
-      
   def extract_min(self):
-    if self.is_empty():
-      return None
-    
-    if self.size() == 1:
-      return self.list.pop()
-    
-    min_val = self.list[0]
+    value = self.list[0]
     self.list[0] = self.list.pop()
     self.sift_down(0)
-    return min_val
-
-
-
-
-
-
+    return value
 
 
 heap = MinHeap()

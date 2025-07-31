@@ -15,23 +15,29 @@ class MinHeap:
 
   def size(self):
     return len(self.list)
+
+  def swap(self, index, parent):
+    self.list[parent], self.list[index] = self.list[index], self.list[parent]
+    return
+
+  def sip_down(self, index):
+    while index > 0:
+      parent = (index - 1) // 2
+      if self.list[parent] > self.list[index]:
+        self.swap(index, parent)
+        index = parent
+      else:
+        break
+
+    return
+        
       
   def insert(self, val):
     self.list.append(val)
+    index = self.size() - 1
 
-    idx = self.list.index(val)
-
-    self.sip_index(idx)
-  
-  def sip_index(self, idx):
-
-    while idx > 0:
-      parent_index = (idx - 1) // 2
-      if self.list[parent_index] > self.list[idx]:
-        self.list[parent_index], self.list[idx] =  self.list[idx], self.list[parent_index]
-        idx = parent_index
-      else:
-        break
+    self.sip_down(index)
+    return
     
 
 heap = MinHeap()

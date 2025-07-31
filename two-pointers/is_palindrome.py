@@ -3,16 +3,15 @@ Write a function, is_palindrome, that takes in a string and returns a boolean in
 
 
 def is_palindrome(s):
-  length = len(s)
-  if length == 1 or length == 0:
+  if not s:
     return True
-    
-  if s[0] == s[length - 1]:
-    return is_palindrome(s[1:length-1])
-  else:
+
+  if s[0] != s[-1]:
     return False
+
+  return is_palindrome(s[1:-1])
   
 
 
 
-is_palindrome("kayak") 
+is_palindrome("pops") 

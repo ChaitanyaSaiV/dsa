@@ -12,42 +12,49 @@ class Node:
   self.next = None
 
 def zipper_lists(head_1, head_2):
-  original_head = head_1
+  return_head = head_1
+
   tail = head_1
-  counter = 0
-  current_1 = head_1.next
-  current_2 = head_2
-  while current_1 is not None and current_2 is not None:
-    if counter % 2 == 0:
-      tail.next = current_2
-      current_2 = current_2.next
+
+  c1 = head_1
+  c2 = head_2
+
+  i = 0
+
+  while c1 is not None and c2 is not None:
+    if i % 2 == 0:
+      c1_next = c1.next
+      tail.next = c2
+      c1 = c1_next
     else:
-      tail.next = current_1
-      current_1 = current_1.next
+      c2_next = c2.next
+      tail.next = c1
+      c2 = c2_next
+      
     tail = tail.next
-    counter += 1
+    i += 1
 
-  if current_1 is not None:
-    tail.next = current_1
-  if current_2 is not None:
-    tail.next = current_2
-    
-  return original_head
+  if c1 is None:
+    tail.next = c2
+  else:
+    tail.next = c1
+
+  return return_head
 
 
 
-s = Node("s")
-t = Node("t")
-s.next = t
-# s -> t
+a = Node("a")
+b = Node("b")
+c = Node("c")
+a.next = b
+b.next = c
+# a -> b -> c
 
-one = Node(1)
-two = Node(2)
-three = Node(3)
-four = Node(4)
-one.next = two
-two.next = three
-three.next = four
-# 1 -> 2 -> 3 -> 4
+x = Node("x")
+y = Node("y")
+z = Node("z")
+x.next = y
+y.next = z
+# x -> y -> z
 
-zipper_lists(s, one)
+zipper_lists(a, x)
